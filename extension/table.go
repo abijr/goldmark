@@ -419,7 +419,7 @@ func (r *TableHTMLRenderer) renderTableCell(w util.BufWriter, source []byte, nod
 					cob.AppendByte(';')
 				}
 				style := fmt.Sprintf("text-align:%s", n.Alignment.String())
-				cob.AppendString(style)
+				cob.Append(util.StringToReadOnlyBytes(style))
 				n.SetAttributeString("style", cob.Bytes())
 			}
 		}
