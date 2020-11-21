@@ -1061,6 +1061,11 @@ func (p *parser) parseBlocks(parent ast.Node, reader text.Reader, pc Context) {
 				// So we do not process paragraphs here.
 				if !ast.IsParagraph(be.Node) {
 					state := be.Parser.Continue(be.Node, reader, pc)
+					if state&Close != 0 {
+						line, seg := reader.Position()
+						be.Node.SetAttribute([]byte("closeLine"), line)
+						be.Node.SetAttribute([]byte("closeSegment"), seg)
+					}
 					if state&Continue != 0 {
 						// When current node is a container block and has no children,
 						// we try to open new child nodes
